@@ -6,6 +6,7 @@ from transactions import indexer, exchange
 app = Flask(__name__)
 
 
+# define the CORS
 CORS(app)
 cors = CORS(app, resources={
     r"/*": {
