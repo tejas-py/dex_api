@@ -5,7 +5,6 @@ from transactions import indexer, exchange
 
 app = Flask(__name__)
 
-
 # define the CORS
 CORS(app)
 cors = CORS(app, resources={
@@ -33,12 +32,12 @@ def price_of_pool():
 
     # asset that has to be converted to
     asset1 = int(asset_id['asset1'])
+    asset1_name = asset_id['asset1_name']
 
     # asset that we want to be converted
     asset2 = int(asset_id['asset2'])
-
-    asset1_name = asset_id['asset1_name']
     asset2_name = asset_id['asset2_name']
+
     wallet_address = asset_id['wallet_address']
 
     price = indexer.pool_price(algod_client, asset1, asset2, asset1_name, asset2_name, wallet_address)
