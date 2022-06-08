@@ -10,17 +10,20 @@ indexer_client = connection.connect_indexer()
 def assets_wallet(wallet):
     response = indexer_client.account_info(wallet)
     total_assets = response['account']['assets']
+
     asset_list = []
     for wallet_asset_info in total_assets:
-
         one_asset_info = indexer_client.asset_info(wallet_asset_info.get('asset-id'))
         params = one_asset_info['asset']['params']
         asset = {
             "amount": wallet_asset_info.get('amount'),
-            "asset-id": wallet_asset_info.get('asset-id'),
-            "frozen-state": wallet_asset_info.get('is-frozen'),
+            "id": wallet_asset_info.get('asset-id'),
+            "frozen": wallet_asset_info.get('is-frozen'),
             "name": params.get('name'),
-            "unit-name": params.get('unit-name')
+            "unitName": params.get('unit-name'),
+            "creator": params.get('creator'),
+            "decimals": params.get('decimals'),
+            "url": params.get('url')
         }
 
         asset_list.append(asset)
