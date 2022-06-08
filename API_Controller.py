@@ -30,8 +30,13 @@ def asset_wallet(wallet_address):
 def price_of_pool():
     # get the details
     asset_id = request.get_json()
+
+    # asset that has to be converted to
     asset1 = int(asset_id['asset1'])
+
+    # asset that we want to be converted
     asset2 = int(asset_id['asset2'])
+
     asset1_name = asset_id['asset1_name']
     asset2_name = asset_id['asset2_name']
     wallet_address = asset_id['wallet_address']
