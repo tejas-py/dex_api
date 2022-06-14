@@ -1,5 +1,4 @@
 from clients import connection
-from tinyman.v1.client import TinymanTestnetClient
 
 
 # connect to the indexer
