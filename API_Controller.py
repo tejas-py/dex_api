@@ -40,7 +40,7 @@ def price_of_pool():
 
     wallet_address = asset_id['wallet_address']
 
-    price = indexer.pool_price(algod_client, asset1, asset2, asset1_name, asset2_name, wallet_address)
+    price = exchange.pool_price(algod_client, asset1, asset2, asset1_name, asset2_name, wallet_address)
     final_price = price[9:]
 
     return jsonify(final_price)

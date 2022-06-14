@@ -23,6 +23,34 @@ def optin_asset(algod_client, address):
         return 'Error !', Error
 
 
+# return the price of the pool
+def pool_price(algod_client, asset1, asset2, asset1_name, asset2_name, wallet_address):
+
+    client = TinymanTestnetClient(algod_client=algod_client, user_address=wallet_address)
+
+    # Declare assets
+    asset = {
+        "asset-1": {
+            'asset_name': asset1_name,
+            'asset_id': asset1
+        },
+        "asset-2": {
+            'asset_name': asset2_name,
+            'asset_id': asset2
+        }
+    }
+
+    # define the swapping assets
+    asset_1 = client.fetch_asset(asset["asset-1"]['asset_id'])
+    asset_2 = client.fetch_asset(asset["asset-2"]['asset_id'])
+
+    # Fetch the pool we will work with
+    pool = client.fetch_pool(asset_1, asset_2)
+    quote = pool.fetch_fixed_input_swap_quote(asset_2(1_000_000), slippage=0.01)
+
+    return str(quote)
+
+
 # assets swap
 def swap_asset(algod_client, address, asset1, asset2, asset1_name, asset2_name, swap_amount):
     # connect to Tiny-Man Client
