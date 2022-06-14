@@ -144,7 +144,11 @@ def remaining_assets(algod_client, address, asset1, asset1_name,  asset2, asset2
     # Check if any excess remaining after the swap
     excess = pool.fetch_excess_amounts()
 
-    return str(excess)
+    try:
+        amount = excess[asset_1]
+        return f"Excess: {amount}"
+    except Exception:
+        return {}
 
 
 # redeem swapped assets
