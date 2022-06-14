@@ -92,7 +92,7 @@ class TransactionGroup:
         transactions = assign_group_id(transactions)
         self.transactions = transactions
         self.signed_transactions = [None for _ in self.transactions]
-    
+
     def sign(self, user):
         user.sign_transaction_group(self)
     

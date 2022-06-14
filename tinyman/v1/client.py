@@ -8,6 +8,7 @@ from tinyman.assets import Asset, AssetAmount
 from .optin import prepare_app_optin_transactions,prepare_asset_optin_transactions
 from .constants import TESTNET_VALIDATOR_APP_ID, MAINNET_VALIDATOR_APP_ID
 
+
 class TinymanClient:
     def __init__(self, algod_client: AlgodClient, validator_app_id: int, user_address=None):
         self.algod = algod_client

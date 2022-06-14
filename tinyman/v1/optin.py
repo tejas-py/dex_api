@@ -12,8 +12,8 @@ def prepare_app_optin_transactions(validator_app_id, sender, suggested_params):
         sp=suggested_params,
         index=validator_app_id,
     )
-    txn_group = TransactionGroup([txn])
-    return txn_group
+    # txn_group = TransactionGroup([txn])
+    return txn
 
 
 def prepare_asset_optin_transactions(asset_id, sender, suggested_params):

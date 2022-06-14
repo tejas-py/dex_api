@@ -42,4 +42,15 @@ def prepare_redeem_transactions(validator_app_id, asset1_id, asset2_id, liquidit
     ]
     txn_group = TransactionGroup(txns)
     txn_group.sign_with_logicisg(pool_logicsig)
-    return txn_group
+
+    # taking out all the transaction from the tiny man object
+    algodtransaction = txn_group.transactions
+    unsign_txn = [algodtransaction[0]]
+
+    # taking out all the signed transaction from the tiny man object
+    signedTransactions = txn_group.signed_transactions
+    sign_txn = [signedTransactions[1], signedTransactions[2]]
+
+    total_txns = [unsign_txn, sign_txn]
+
+    return total_txns

@@ -25,7 +25,7 @@ def asset_wallet(wallet_address):
 
 
 # price of the assets in the pool
-@app.route('/pool_price')
+@app.route('/pool_price', methods=['POST'])
 def price_of_pool():
     # get the details
     asset_id = request.get_json()
@@ -41,7 +41,9 @@ def price_of_pool():
     wallet_address = asset_id['wallet_address']
 
     price = indexer.pool_price(algod_client, asset1, asset2, asset1_name, asset2_name, wallet_address)
-    return price
+    final_price = price[9:]
+
+    return jsonify(final_price)
 
 
 # Opt-in the Assets
@@ -52,7 +54,7 @@ def optin():
     address = account['wallet_address']
 
     optin_transaction = exchange.optin_asset(algod_client, address)
-    return optin_transaction
+    return jsonify(optin_transaction)
 
 
 # Swap Assets
@@ -74,7 +76,26 @@ def swapping():
 
     swap_transaction = exchange.swap_asset(algod_client, address,
                                            asset1, asset2, asset1_name, asset2_name, swap_amount)
-    return swap_transaction
+    return jsonify(swap_transaction)
+
+
+# remaining assets in pool
+@app.route('/remaining_redeem', methods=['POST'])
+def pool_excess():
+    # get the details
+    redeem_info = request.get_json()
+    address = redeem_info['wallet_address']
+
+    # asset that is converted to
+    asset1 = int(redeem_info['asset1'])
+    asset1_name = redeem_info['asset1_name']
+
+    # asset that is to be converted
+    asset2 = int(redeem_info['asset2'])
+    asset2_name = redeem_info['asset2_name']
+
+    remaining_amt = exchange.remaining_assets(algod_client, address, asset1, asset1_name, asset2, asset2_name)
+    return remaining_amt
 
 
 # Redeem Asset
@@ -83,10 +104,16 @@ def redeem():
     # get the details
     redeem_info = request.get_json()
     address = redeem_info['wallet_address']
-    asset1 = int(redeem_info['asset1'])
-    asset2 = int(redeem_info['asset2'])
 
-    redeem_transaction = exchange.redeem_asset(algod_client, address, asset1, asset2)
+    # asset that is converted to
+    asset1 = int(redeem_info['asset1'])
+    asset1_name = redeem_info['asset1_name']
+
+    # asset that is to be converted
+    asset2 = int(redeem_info['asset2'])
+    asset2_name = redeem_info['asset2_name']
+
+    redeem_transaction = exchange.redeem_asset(algod_client, address, asset1, asset1_name, asset2, asset2_name)
     return jsonify(redeem_transaction)
 
 
